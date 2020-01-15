@@ -1,3 +1,9 @@
+## General Info
+
+Master has all the changes till observalbles. 
+
+Custom directives, services and dependency injection and routing(Services implementation is replaced with routing) are completed.
+
 # RecipeBookProject
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.3.
