@@ -6,7 +6,7 @@
 </div>   
 
 <div id="accordion">
-  <div *ngFor="let ingredient of ingredients; let inn = index;">
+  <div *ngFor="let ingredient of ingredients; let inn = index;" class="mr-5 ml-5">
           <div class="card mb-1 border border-dark defaultBackGround" id="accord_{{inn}}" style="transition: .2s ease-in-out;">
             <div class="card-header" style="cursor: pointer;" (click)="CardClick(inn)" >
               <h5>
