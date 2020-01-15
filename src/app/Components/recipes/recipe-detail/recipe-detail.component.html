@@ -1,0 +1,65 @@
+<!-- style="border:1px solid black;" -->
+<div class="row">
+  <div class="col-xl-3 col-lg-3">
+    <!-- <div class="d-flex flex-colummn"> -->
+      <div>
+        <h4>{{ recipe.name }}</h4>
+      </div>
+      <div>
+          <div class="dropdown">
+              <button 
+                class="btn btn-outline-primary btn-sm dropdown-toggle" 
+                type="button" 
+                data-toggle="dropdown" >
+                <!-- appHoverDropdown -->
+                  Manage Recipe
+              </button>
+
+              <div
+                
+                class="dropdown-menu"
+                x-placement="bottom-start"
+                style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
+                <!-- (click)="appMouseleaveDropdown($event)" appMouseleaveDropdown-->
+                  <a class="dropdown-item" style="cursor: default;">Add to cart</a>
+                  <a class="dropdown-item" style="cursor: default;">Replace cart</a>
+                  <a class="dropdown-item" routerLink="Edit">Edit</a>
+                  <a class="dropdown-item">Delete</a>
+              </div>
+          </div>
+      </div>
+      <!-- <div class="bottom">
+        4.5 out of 5
+      </div> -->
+    <!-- </div> -->
+
+  </div>
+
+  <div class="col-xl-9 col-lg-9">
+      <img [src]="recipe.imagePath"
+      style="max-width: -webkit-fill-available;min-height: 200px;"
+      class="img-responsive">
+  </div>
+</div>
+<div>
+      {{recipe.description}}
+</div>
+<hr>
+<div class="col-sm-12 col-md-10 col-lg-9 col-xl-7">
+    <h5>Ingredients</h5>
+    <ul class="list-group mt-3">
+      <li 
+      class="list-group-item defaultBackGround d-flex justify-content-between align-items-center border border-dark" 
+      *ngFor="let ingred of recipe.ingredients"> {{ingred.name}}
+          <span class="badge badge-dark">{{ingred.quantity}} {{ingred.units}}
+        <!-- <span class="badge defaultBackGround border border-dark defaultFont">  -->
+        <!-- </span> -->
+      </span>
+      </li>
+    </ul>
+
+</div>
+
+
+
+

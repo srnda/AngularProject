@@ -1,0 +1,16 @@
+
+<img class="card-img img-responsive" id="img{{currentIndex.toString()}}"
+      [src]="currentRecipe.imagePath" 
+      alt="{{currentRecipe.name + ' image'}}"
+      style="min-height: 150px; transition: .4s ease-in-out; opacity:0.8">
+      <!-- opacity: 0.8 ; -->
+
+    <div 
+      class="card-img-overlay" 
+      id="crd_div{{currentIndex.toString()}}" 
+      style="text-shadow: slategray;">
+        <h4 class="card-title" >{{currentRecipe.name}}</h4>
+        <p class="card-text" >{{currentRecipe.description}}</p>
+    </div>
+
+    <!-- style="background:rgba(185, 189, 189,0.6);width:fit-content" -->

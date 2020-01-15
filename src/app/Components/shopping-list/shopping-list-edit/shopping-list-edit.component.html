@@ -1,0 +1,38 @@
+<div class="d-flex justify-content-center">
+  <div class="col-sm-6 text-left">
+    <div class="form-group">
+      <label for="ingredient">Ingredient</label>
+      <input type="text" class="form-control" placeholder="Ingredient name" id="ingredient" #ingredientNameInput>
+    </div>
+  </div>
+  <div class="col-sm-3">
+      <!-- text-right -->
+    <div class="form-group">
+      <label for="quantity">Quantity</label>
+      <input type="number" class="form-control" id="quantity" placeholder="Quantity" #quantityInput>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <label for="selectUnits">Select Units</label>
+    <select name="units" class="form-control" id = "selectUnits" #selectUnits>
+      <option value="0">Choose</option>
+      <option value="1">numbers</option>
+      <option value="2">grams</option>
+      <option value="3">ml</option>
+      <option value="4">tea spoon</option>
+      <option value="5">table spoon</option>
+    </select>
+  </div>
+</div>
+<div class="d-flex justify-content-center">
+  <div>
+    <button class="btn btn-success" 
+    (click)="AddIngredient(ingredientNameInput.value,quantityInput.value,selectUnits.value)">Add</button>
+  </div>
+  <div class="ml-2 mr-2">
+      <button class="btn btn-danger">Delete</button>
+  </div>
+  <div>
+      <button class="btn btn-info">Clear</button>
+    </div>
+</div>

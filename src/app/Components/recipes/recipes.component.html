@@ -1,0 +1,16 @@
+<div class="row defaultPadding">
+  <div class="col-sm-4 col-md-4 col-lg-5 col-xl-5" >
+      <!-- <app-recipe-list (recipeClicked)="RecipeChosen($event);"> -->
+        <app-recipe-list>
+         
+      </app-recipe-list> 
+  </div>
+  <div  class="col-sm-8 col-md-8 col-lg-7 col-xl-7" >
+      <router-outlet> </router-outlet>
+  </div>
+</div>
+
+<!-- <app-recipe-detail [recipe] = "recipeClicked" *ngIf="isRecepiSelected; else notSelected;"></app-recipe-detail>
+      <ng-template #notSelected>
+        <p>Please select a recipe.</p>
+      </ng-template> -->

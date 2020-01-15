@@ -1,0 +1,32 @@
+<div class="defaultPadding row mb-2">
+  <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 ml-auto mr-auto">
+      <!-- <app-shopping-list-edit (newIngredientAdded)="IngredientAdded($event)"></app-shopping-list-edit> -->
+      <app-shopping-list-edit></app-shopping-list-edit>
+  </div>
+</div>   
+
+<div id="accordion">
+  <div *ngFor="let ingredient of ingredients; let inn = index;">
+          <div class="card mb-1 border border-dark defaultBackGround" id="accord_{{inn}}" style="transition: .2s ease-in-out;">
+            <div class="card-header" style="cursor: pointer;" (click)="CardClick(inn)" >
+              <h5>
+                <a href="#collapse{{inn}}" 
+                data-parent="#accordion" 
+                data-toggle="collapse" 
+                aria-expanded="false" 
+                class="collapsed defaultFont"
+                style="text-decoration: none;"
+                id="ingr_{{inn}}">
+                  {{ingredient.name}} ({{ingredient.quantity}} - {{ingredient.units}})
+                </a>
+              </h5>
+            </div>
+      
+            <div id="collapse{{inn}}" class="collapse">
+              <div class="card-body">
+                {{ingredient.preparation}}
+              </div>
+            </div>
+          </div>
+  </div>
+</div>
