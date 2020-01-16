@@ -17,7 +17,7 @@ import { RecipeStartComponent } from './Components/recipes/recipe-start/recipe-s
 import { RecipeService } from './ServiceDependencies/Recipe.Service';
 import { RecipeEditComponent } from './Components/recipes/recipe-edit/recipe-edit.component';
 import { ShoppingListService } from './ServiceDependencies/ShoppingList.Service';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 const routes:Routes = 
 [
@@ -48,6 +48,7 @@ const routes:Routes =
     RecipeEditComponent
   ],
   imports: [
+    ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
     RouterModule.forRoot(routes),

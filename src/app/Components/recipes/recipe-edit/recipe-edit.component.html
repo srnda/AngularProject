@@ -1,3 +1,62 @@
-<h4>
-  {{title}}
-</h4>
+<form [formGroup]="recForm">
+  <div class="d-flex justify-content-between">
+    <input type="button" class="btn btn-success" value="Save" [disabled]="!recForm.valid">
+    <!-- <i class="ml-1 far fa-save"></i> -->
+    <input type="button" class="btn btn-danger" value="Cancel">
+  </div>
+  <hr>
+  <div class="row mb-2">
+    <div class="col-sm-12">
+      <input type="text" class="form-control" placeholder="Name" formControlName="recName" [(ngModel)]="recipeName" (input)="RecipeNameChanged();">
+    </div>
+  </div>
+  <div class="row mb-2">
+  
+    <div class="col-sm-12">
+      <input type="text" class="form-control" placeholder="Image" formControlName="recImagePath" [(ngModel)]="recipeImagePath">
+    </div>
+  </div>
+  <div class="row mb-4">
+      <div class="col-sm-12">
+      <textarea rows="4" class="form-control" placeholder="Description" formControlName="recDescription"></textarea>
+    </div>
+  </div>
+  <h4 class="d-flex justify-content-between">
+    Ingredients
+      <button class="btn btn-sm btn-outline-success" (click)="AddNewIngredient();">
+        New Ingredient
+        <i class="fas fa-plus ml-1"></i>
+      </button>
+  </h4>
+  <div formArrayName="recIngredients">
+    <div class="row mr-2 ml-1 mb-1"  *ngFor = "let ingredient of GetIngredients(); let inn = index;" [formGroupName]="inn">
+      <div class="col-5">
+        <input 
+          type="text" 
+          class="form-control" 
+          placeholder="Name"
+          formControlName="ingName"
+        >
+      </div>
+      <div class="col-3">
+        <input type="number" class="form-control" placeholder="Quantity" formControlName="ingQuantity">
+      </div>
+      <div class="col-3">
+        <select 
+        name="units" 
+        class="form-control" 
+        formControlName="ingUnits">
+          <option value="1">numbers</option>
+          <option value="2">grams</option>
+          <option value="3">ml</option>
+          <option value="4">tea spoon</option>
+          <option value="5">table spoon</option>
+        </select>
+      </div>
+      <div class="col-1">
+        <button type="button" class="btn btn-outline-danger align-middle" 
+        (click)="DeleteIngredient(inn);" ><i class="far fa-trash-alt"></i></button>
+      </div>
+    </div>
+  </div> 
+</form>
