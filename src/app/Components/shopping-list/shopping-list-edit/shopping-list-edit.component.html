@@ -9,7 +9,9 @@
         placeholder="Ingredient name" 
         id="ingredient" 
         name="ingredientName" 
-        ngModel required>
+        ngModel 
+        required
+        #ingredientName>
     </div>
   </div>
   <div class="col-sm-3">
@@ -23,7 +25,8 @@
         placeholder="Quantity" 
         name="Quantity"
         ngModel
-        required>
+        required
+        #Quantity>
     </div>
   </div>
   <div class="col-sm-3">
@@ -33,7 +36,8 @@
       class="form-control" 
       id = "selectUnits" 
       ngModel
-      required>
+      required
+      #units>
         <!-- <option value="0" selected>Choose</option> -->
         <option value="1">numbers</option>
         <option value="2">grams</option>
@@ -47,15 +51,13 @@
   <div>
     <!-- <button class="btn btn-success" 
     (click)="AddIngredient(ingredientNameInput.value,quantityInput.value,selectUnits.value)">Add</button> -->
-
-    <input type="submit" class="btn btn-success" placeholder="Add"
-      [disabled]="!AddIngrForm.valid">
+    <input type="submit" class="btn btn-success" [disabled]="!AddIngrForm.valid" [value]="btnActionText">
   </div>
   <div class="ml-2 mr-2">
-      <button class="btn btn-danger">Delete</button>
+      <button class="btn btn-danger" [disabled] = "editingIndex < 0" (click)="DeleteIngredient(AddIngrForm);">Delete</button>
   </div>
   <div>
-      <button class="btn btn-warning"  (click)="ResetForm(AddIngrForm);">Clear</button>
+      <button class="btn btn-warning" [disabled] = "AddIngrForm.pristine && AddIngrForm.invalid" (click)="ResetForm(AddIngrForm);">Clear</button>
     </div>
 </div>
 </form>

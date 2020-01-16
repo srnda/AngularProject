@@ -28,6 +28,9 @@ export class ShoppingListComponent implements OnInit {
   {
     document.getElementById('ingr_'+elementId).click();
   }
-
-  
+  EditIngredient(index:number)
+  {
+    this.shoppingListService.EditingIngredient.next(index);
+    return false;
+  }
 }
