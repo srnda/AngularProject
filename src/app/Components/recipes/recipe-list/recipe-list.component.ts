@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Recipe } from 'src/app/Models/Recipe.model';
 import { RecipeService } from 'src/app/ServiceDependencies/Recipe.Service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-recipe-list',
@@ -15,6 +16,11 @@ export class RecipeListComponent implements OnInit {
 
   ngOnInit() {
     this.recepies =  this.recipeService.GetRecepies();
+    this.recipeService.recipeAltered.subscribe( data=> 
+      {
+        if(data.edit == false){this.recepies.push(data.recipe); }
+        else{this.recepies[data.ind] = data.recipe;}
+      });
   }
 
   mouseEnter(index:number,ele)

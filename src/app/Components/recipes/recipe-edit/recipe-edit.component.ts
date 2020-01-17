@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RecipeService } from 'src/app/ServiceDependencies/Recipe.Service';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Recipe } from 'src/app/Models/Recipe.model';
+import { Ingredient } from 'src/app/Models/Ingredient.model';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -21,7 +22,7 @@ export class RecipeEditComponent implements OnInit {
   private recipeName:string;
   private recipeImagePath:string;
 
-  constructor(private recipeService: RecipeService, private activeRoute: ActivatedRoute) 
+  constructor(private router:Router, private recipeService: RecipeService, private activeRoute: ActivatedRoute) 
   {
   }
   ngOnInit() 
@@ -36,10 +37,6 @@ export class RecipeEditComponent implements OnInit {
             this.ConstructForm();
           }
       );
-      // if (this.editMode)
-      // {this.title = this.recipeService.GetRecipe(this.recipeId).name + ', the way you want...';}
-      // else
-      // {this.title = 'Tell us your awesome recipe...'}
   }
   
   ConstructForm()
@@ -62,7 +59,7 @@ export class RecipeEditComponent implements OnInit {
             ({
               'ingName':new FormControl(ing.name,Validators.required),
               'ingQuantity':new FormControl(ing.quantity,Validators.required),
-              'ingUnits':new FormControl(ing.GetUnitId(ing.units),Validators.required)
+              'ingUnits':new FormControl(Ingredient.GetUnitId(ing.units),Validators.required)
             }) 
           )
       }
@@ -76,7 +73,6 @@ export class RecipeEditComponent implements OnInit {
       'recDescription':new FormControl(recDescription,Validators.required),
       'recIngredients':ingredients
     });
-
   }
   GetIngredients()
   {
@@ -92,6 +88,7 @@ export class RecipeEditComponent implements OnInit {
           'ingUnits':new FormControl(null, [Validators.required])
         }) 
     )
+    // return false;
   }
   DeleteIngredient(index:number)
   {
@@ -101,5 +98,54 @@ export class RecipeEditComponent implements OnInit {
   RecipeNameChanged()
   {
     this.recipeImagePath = 'https://source.unsplash.com/1000x200/?'+this.recipeName.split(' ').join('');
+  }
+
+  SaveRecipe()
+  {
+    var rName = this.recForm.get('recName').value;
+    var rImgPath = this.recForm.get('recImagePath').value;
+    var rDesc = this.recForm.get('recDescription').value;
+    var rIngs = (<FormArray>this.recForm.get('recIngredients')).controls;
+    var rIngLst = []
+    for(var ingIndex = 0; ingIndex<rIngs.length; ingIndex++)
+    {
+      var ingrGrp = rIngs[ingIndex]
+      rIngLst.push
+      (
+        new Ingredient
+        (
+           ingrGrp.get('ingName').value, 
+           ingrGrp.get('ingQuantity').value,
+           'Preparation',
+           ingrGrp.get('ingUnits').value
+        )
+      )
+    }
+    var recipe = new Recipe(rName,rDesc,rImgPath,rIngLst)
+    if(!this.editMode)
+    {
+      var id = this.recipeService.AddRecipe(recipe);
+      this.router.navigate(['../'+id.toString()],
+       {relativeTo:this.activeRoute,fragment:'crd_div'+id.toString()});
+    }
+    else
+    {
+      this.recipeService.EditedRecipe(recipe,this.recipeId);
+      this.editingRec= recipe; 
+      this.editMode = false;
+      this.editingRec = null;
+      this.router.navigate(['../'],{relativeTo:this.activeRoute,fragment:'crd_div'+this.recipeId.toString()})
+          // this.recipeService.AddRecipe(recipe);
+    }
+
+    
+    // if (this.editMode)
+    // {
+    //   console.log(rName);
+    //   console.log(rImgPath);
+    //   console.log(rDesc);
+    //   console.log(rIngs);
+    // }
+
   }
 }

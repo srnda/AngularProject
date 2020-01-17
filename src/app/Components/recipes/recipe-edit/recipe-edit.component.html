@@ -1,6 +1,6 @@
-<form [formGroup]="recForm">
+<form [formGroup]="recForm" (ngSubmit)="SaveRecipe();">
   <div class="d-flex justify-content-between">
-    <input type="button" class="btn btn-success" value="Save" [disabled]="!recForm.valid">
+    <input type="submit" class="btn btn-success" value="Save" [disabled]="!recForm.valid">
     <!-- <i class="ml-1 far fa-save"></i> -->
     <input type="button" class="btn btn-danger" value="Cancel">
   </div>
@@ -23,10 +23,10 @@
   </div>
   <h4 class="d-flex justify-content-between">
     Ingredients
-      <button class="btn btn-sm btn-outline-success" (click)="AddNewIngredient();">
+      <a class="btn btn-sm btn-outline-success" (click)="AddNewIngredient()">
         New Ingredient
         <i class="fas fa-plus ml-1"></i>
-      </button>
+      </a>
   </h4>
   <div formArrayName="recIngredients">
     <div class="row mr-2 ml-1 mb-1"  *ngFor = "let ingredient of GetIngredients(); let inn = index;" [formGroupName]="inn">

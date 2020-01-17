@@ -6,6 +6,7 @@ export class RecipeService
 {
     // public recipeSelected = new EventEmitter<Recipe>();
     public recipeSelected = new Subject<Recipe>();
+    public recipeAltered = new Subject<{edit:boolean, recipe:Recipe,ind:number}>();
     private recepies:Recipe[] = 
   [
     new Recipe('Prawn Salad','Salad of steamed and pepper fried prawn and fresh cut fruits and vegetables',
@@ -26,6 +27,11 @@ export class RecipeService
     )
   ];
 
+    RecipeCount()
+    {
+      return this.recepies.length;
+    }
+
     GetRecepies()
     {
         return this.recepies.slice();
@@ -34,6 +40,17 @@ export class RecipeService
     GetRecipe(index:number): Recipe
     {
       return this.recepies[index]
+    }
+    AddRecipe(rec:Recipe)
+    {
+      this.recepies.push(rec);
+      this.recipeAltered.next({edit:false,recipe:rec,ind:-1});
+      return this.recepies.indexOf(rec);
+    }
+    EditedRecipe(recipeAlt:Recipe,id:number)
+    {
+      this.recepies[id] = recipeAlt
+      this.recipeAltered.next({edit:true,recipe:recipeAlt,ind:id}) 
     }
 
 }

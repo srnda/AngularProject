@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { Recipe } from 'src/app/Models/Recipe.model';//src/app/Models/Recipe.model
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RecipeService } from 'src/app/ServiceDependencies/Recipe.Service';
 
 @Component({
@@ -11,16 +11,26 @@ import { RecipeService } from 'src/app/ServiceDependencies/Recipe.Service';
 export class RecipeDetailComponent implements OnInit {
   private recipe:Recipe;
 
-  constructor(private recipeService: RecipeService, private activeRoute: ActivatedRoute) 
+  constructor(private router:Router,  private recipeService: RecipeService, private activeRoute: ActivatedRoute) 
   {
-    console.log('recDetail');
+    // console.log('recDetail');
+    this.activeRoute.params.subscribe
+    (
+      params => 
+      {
+        if (this.recipeService.RecipeCount() <= params['index'] )
+        {
+          this.router.navigate(['Recipes'])
+        }
+        else{
+         this.recipe = this.recipeService.GetRecipe(params['index']); 
+        }
+      }
+    );
   }
 
   ngOnInit() {
-    this.activeRoute.params.subscribe
-      (
-        params => { this.recipe = this.recipeService.GetRecipe(params['index']); }
-      );
+   
   }
 
   // AddToCart()
