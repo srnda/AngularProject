@@ -2,7 +2,7 @@
 
 Master has all the changes till observalbles. 
 
-Custom directives, services and dependency injection and routing(Services implementation is replaced with routing) are completed.
+Custom directives, services and dependency injection, routing(Services implementation is replaced with routing) and forms are completed.
 
 # RecipeBookProject
 
