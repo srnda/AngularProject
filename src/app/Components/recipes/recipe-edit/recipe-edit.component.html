@@ -2,7 +2,7 @@
   <div class="d-flex justify-content-between">
     <input type="submit" class="btn btn-success" value="Save" [disabled]="!recForm.valid">
     <!-- <i class="ml-1 far fa-save"></i> -->
-    <input type="button" class="btn btn-danger" value="Cancel">
+    <input type="button" class="btn btn-danger" value="Cancel" (click)="CancelEdit()">
   </div>
   <hr>
   <div class="row mb-2">

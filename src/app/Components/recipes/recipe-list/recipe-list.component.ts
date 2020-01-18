@@ -17,9 +17,16 @@ export class RecipeListComponent implements OnInit {
   ngOnInit() {
     this.recepies =  this.recipeService.GetRecepies();
     this.recipeService.recipeAltered.subscribe( data=> 
-      {
-        if(data.edit == false){this.recepies.push(data.recipe); }
-        else{this.recepies[data.ind] = data.recipe;}
+      {//1* - a recipe
+        if(data.edit == false) //added or deleted 1*
+        {
+          if(data.recipe == null)//deleted 1*
+          {this.recepies = this.recipeService.GetRecepies();}
+          else//added 1*
+          {this.recepies.push(data.recipe);}
+         }
+        else //edited 1*
+        {this.recepies[data.ind] = data.recipe;}
       });
   }
 

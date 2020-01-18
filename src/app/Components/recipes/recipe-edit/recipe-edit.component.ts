@@ -130,22 +130,27 @@ export class RecipeEditComponent implements OnInit {
     }
     else
     {
-      this.recipeService.EditedRecipe(recipe,this.recipeId);
-      this.editingRec= recipe; 
+      if (this.recipeService.EditedRecipe(recipe,this.recipeId))
+      {
+        // this.editingRec= recipe; 
+        this.editMode = false;
+        this.editingRec = null;
+        this.router.navigate(['../'],{relativeTo:this.activeRoute,fragment:'crd_div'+this.recipeId.toString()})
+      }
+    }
+  }
+  CancelEdit()
+  {
+    this.recForm.reset();
+    if (this.editMode)
+    {
       this.editMode = false;
       this.editingRec = null;
-      this.router.navigate(['../'],{relativeTo:this.activeRoute,fragment:'crd_div'+this.recipeId.toString()})
-          // this.recipeService.AddRecipe(recipe);
+      // this.router.navigate(['../'],{relativeTo:this.activeRoute,fragment:'crd_div'+this.recipeId.toString()})
     }
-
-    
-    // if (this.editMode)
-    // {
-    //   console.log(rName);
-    //   console.log(rImgPath);
-    //   console.log(rDesc);
-    //   console.log(rIngs);
+    this.router.navigate(['../']);
+    // else{
+      // this.router.navigate(['../'],{relativeTo:this.activeRoute})
     // }
-
   }
 }

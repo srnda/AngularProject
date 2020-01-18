@@ -47,10 +47,16 @@ export class RecipeService
       this.recipeAltered.next({edit:false,recipe:rec,ind:-1});
       return this.recepies.indexOf(rec);
     }
-    EditedRecipe(recipeAlt:Recipe,id:number)
+    EditedRecipe(recipeAlt:Recipe,id:number):boolean
     {
       this.recepies[id] = recipeAlt
       this.recipeAltered.next({edit:true,recipe:recipeAlt,ind:id}) 
+      return true;
+    }
+    DeleteRecipe(index:number)
+    {
+      this.recepies.splice(index,1);
+      this.recipeAltered.next({edit:false,recipe:null,ind:-1});
     }
 
 }

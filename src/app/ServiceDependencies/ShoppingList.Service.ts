@@ -26,6 +26,8 @@ export class ShoppingListService
               var accord =  document.getElementById('accord_'+inn);
               var textContent = document.getElementById('ingr_'+inn);
 
+              if(accord == null ||textContent == null){return;}
+
               accord.classList.remove('border-dark');
               textContent.classList.remove('defaultFont')
 
@@ -85,12 +87,19 @@ export class ShoppingListService
   }
   DeleteIngredient(ingredient:Ingredient)
   {
-    this.ingredients.forEach(element => {
+    console.log(this.ingredients);
+    
+    for (var element of this.ingredients)
+    {
       if (element.name == ingredient.name && element.quantity == ingredient.quantity && element.units)
       {
         this.ingredients.splice( this.ingredients.indexOf(element),1 );
         return;
       }      
-    });
+    }
+
+    console.log(this.ingredients);
+    
+
   }
 }

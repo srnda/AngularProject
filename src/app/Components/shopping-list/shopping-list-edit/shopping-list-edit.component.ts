@@ -41,7 +41,7 @@ export class ShoppingListEditComponent implements OnInit {
 
         // this.ingrForm.reset();
         var ingr = this.shoppingListService.GetIngredient(index);
-        this.ingrForm.setValue({ingredientName:ingr.name,Quantity:ingr.quantity,units:ingr.GetUnitId(ingr.units)});
+        this.ingrForm.setValue({ingredientName:ingr.name,Quantity:ingr.quantity,units:Ingredient.GetUnitId(ingr.units)});
         console.log(this.ingrForm);
         
       }

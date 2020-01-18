@@ -2,6 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { Recipe } from 'src/app/Models/Recipe.model';//src/app/Models/Recipe.model
 import { ActivatedRoute, Router } from '@angular/router';
 import { RecipeService } from 'src/app/ServiceDependencies/Recipe.Service';
+import { ShoppingListService } from 'src/app/ServiceDependencies/ShoppingList.Service';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -10,10 +11,13 @@ import { RecipeService } from 'src/app/ServiceDependencies/Recipe.Service';
 })
 export class RecipeDetailComponent implements OnInit {
   private recipe:Recipe;
+  private selectedRecipeId:number;
 
-  constructor(private router:Router,  private recipeService: RecipeService, private activeRoute: ActivatedRoute) 
+  constructor(private router:Router,  
+              private recipeService: RecipeService,
+              private activeRoute: ActivatedRoute, 
+              private shoppingListService:ShoppingListService) 
   {
-    // console.log('recDetail');
     this.activeRoute.params.subscribe
     (
       params => 
@@ -24,6 +28,7 @@ export class RecipeDetailComponent implements OnInit {
         }
         else{
          this.recipe = this.recipeService.GetRecipe(params['index']); 
+         this.selectedRecipeId = params['index'];
         }
       }
     );
@@ -33,14 +38,24 @@ export class RecipeDetailComponent implements OnInit {
    
   }
 
-  // AddToCart()
-  // {
-  //   this.shoppingListService.InsertIngredients(this.recipe.ingredients);
-  //   document.getElementById('nav_ShoppingList').click();
-  // }
-  // ReplaceCart()
-  // {
-  //   this.shoppingListService.ReplaceIngredients(this.recipe.ingredients);
-  //   document.getElementById('nav_ShoppingList').click();
-  // }
+  DeleteRecipe()
+  {
+    this.recipeService.DeleteRecipe(this.selectedRecipeId);
+    this.router.navigate(['Recipes'])
+
+  }
+
+  AddToCart()
+  {
+    this.shoppingListService.InsertIngredients(this.recipe.ingredients);
+    this.router.navigate(['ShoppingList'])
+    // document.getElementById('nav_ShoppingList').click();
+  }
+  ReplaceCart()
+  {
+    this.shoppingListService.ReplaceIngredients(this.recipe.ingredients);
+    this.router.navigate(['ShoppingList'])
+    // document.getElementById('nav_ShoppingList').click();
+  }
 }
+
