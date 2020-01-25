@@ -26,4 +26,9 @@ export class Ingredient
         {   if (this.quantity == 1){unit = 'table spoon'} else {  unit = 'table spoons'}}
         return unit;
     }
+    static GetUnitId(unit:string)
+    {
+        if (unit.endsWith('s')){unit = unit.slice(0, unit.length-1)}
+        return {'number':1,'gram':2,'ml':3,'tea spoon':4,'table spoon':5}[unit];
+    }
 }

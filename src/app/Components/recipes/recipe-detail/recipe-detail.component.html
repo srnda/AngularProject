@@ -14,17 +14,15 @@
                 <!-- appHoverDropdown -->
                   Manage Recipe
               </button>
-
               <div
-                
                 class="dropdown-menu"
                 x-placement="bottom-start"
                 style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
                 <!-- (click)="appMouseleaveDropdown($event)" appMouseleaveDropdown-->
-                  <a class="dropdown-item" style="cursor: default;">Add to cart</a>
-                  <a class="dropdown-item" style="cursor: default;">Replace cart</a>
-                  <a class="dropdown-item" routerLink="Edit">Edit</a>
-                  <a class="dropdown-item">Delete</a>
+                  <a class="dropdown-item" style="cursor: default;" (click)="AddToCart()">Add to cart</a>
+                  <a class="dropdown-item" style="cursor: default;" (click)="ReplaceCart()">Replace cart</a>
+                  <a class="dropdown-item" style="cursor: default;" routerLink="Edit">Edit</a>
+                  <a class="dropdown-item" style="cursor: default;" (click)="DeleteRecipe()">Delete</a>
               </div>
           </div>
       </div>
@@ -32,9 +30,7 @@
         4.5 out of 5
       </div> -->
     <!-- </div> -->
-
   </div>
-
   <div class="col-xl-9 col-lg-9">
       <img [src]="recipe.imagePath"
       style="max-width: -webkit-fill-available;min-height: 200px;"
@@ -57,9 +53,4 @@
       </span>
       </li>
     </ul>
-
 </div>
-
-
-
-
