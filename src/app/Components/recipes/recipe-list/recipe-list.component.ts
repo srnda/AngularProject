@@ -11,10 +11,12 @@ import { Router } from '@angular/router';
 export class RecipeListComponent implements OnInit {
 
   private recepies:Recipe[];
+  private loadingData = false;
 
   constructor(private recipeService:RecipeService) {}
 
   ngOnInit() {
+    this.recipeService.recipeLoading.subscribe(status => {this.loadingData = status;});
     this.recepies =  this.recipeService.GetRecepies();
     this.recipeService.recipeAltered.subscribe( data=> 
       {//1* - a recipe
@@ -28,6 +30,8 @@ export class RecipeListComponent implements OnInit {
         else //edited 1*
         {this.recepies[data.ind] = data.recipe;}
       });
+    this.recipeService.FetchData();
+
   }
 
   mouseEnter(index:number,ele)

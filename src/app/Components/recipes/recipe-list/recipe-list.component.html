@@ -1,5 +1,9 @@
-<div *ngIf="recepies.length < 1">
+<div *ngIf="recepies.length < 1 && !loadingData">
   <h4>No recipes...</h4>
+</div>
+
+<div *ngIf="loadingData">
+  <h4>Fetching recipes... Hang on.</h4>
 </div>
 
 
