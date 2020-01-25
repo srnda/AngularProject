@@ -1,31 +1,35 @@
 import { Recipe } from 'src/app/Models/Recipe.model';
 import { Ingredient } from '../Models/Ingredient.model';
 import { Subject } from 'rxjs';
+import{HttpClient} from '@angular/common/http'
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class RecipeService
 {
+  constructor(private http:HttpClient){}
     // public recipeSelected = new EventEmitter<Recipe>();
     public recipeSelected = new Subject<Recipe>();
     public recipeAltered = new Subject<{edit:boolean, recipe:Recipe,ind:number}>();
-    private recepies:Recipe[] = 
-  [
-    new Recipe('Prawn Salad','Salad of steamed and pepper fried prawn and fresh cut fruits and vegetables',
-    'https://source.unsplash.com/1000x200/?prawn',
-     [new Ingredient('Prawn',100,'Prawn Description',1), new Ingredient('Cabbage',1,'Cabbage Description',1)]),
-    new Recipe('Quiche','Swiss cheese, ham, parsley, and pimento peppers come together deliciously in this recipe that\'s specifically meant to be a make-ahead option.',
-    'https://source.unsplash.com/1000x200/?quiche',
-    [new Ingredient('Ham',250,'Ham description',2),new Ingredient('Parseley',10,'Parseley description',1),
-    new Ingredient('Primento',100,'Primento description',2)]),
-    new Recipe('StrawCheese French Toast','French toast topped with glazed strawberries and stuffed with cheesecake. Soooo good and original. Perfect to impress at a brunch. Serve with mimosas for a fancier brunch-type setting',
-    'https://source.unsplash.com/1000x200/?FrenchToast',
-    [new Ingredient('Strawberry',10,'Strawberry description',1),new Ingredient('Cheese',50,'Cheese description',2),
-    new Ingredient('Wheat bread crust',1,'Wheat bread crust description',1)]),
-    new Recipe('Martini','A cocktail made with gin and vermouth, and garnished with an olive or a lemon twist. Over the years, the martini has become one of the best-known mixed alcoholic beverages.',
-    'https://source.unsplash.com/1000x200/?Martini',
-    [new Ingredient('Gin',30,'Gin description',3),new Ingredient('Vermouth',50,'Vermouth description',3),
-    new Ingredient('Olive',1,'Olive description',1)]
-    )
-  ];
+    private recepies:Recipe[] = [];
+  // [
+  //   new Recipe('Prawn Salad','Salad of steamed and pepper fried prawn and fresh cut fruits and vegetables',
+  //   'https://source.unsplash.com/1000x200/?prawn',
+  //    [new Ingredient('Prawn',100,'Prawn Description',1), new Ingredient('Cabbage',1,'Cabbage Description',1)]),
+  //   new Recipe('Quiche','Swiss cheese, ham, parsley, and pimento peppers come together deliciously in this recipe that\'s specifically meant to be a make-ahead option.',
+  //   'https://source.unsplash.com/1000x200/?quiche',
+  //   [new Ingredient('Ham',250,'Ham description',2),new Ingredient('Parseley',10,'Parseley description',1),
+  //   new Ingredient('Primento',100,'Primento description',2)]),
+  //   new Recipe('StrawCheese French Toast','French toast topped with glazed strawberries and stuffed with cheesecake. Soooo good and original. Perfect to impress at a brunch. Serve with mimosas for a fancier brunch-type setting',
+  //   'https://source.unsplash.com/1000x200/?FrenchToast',
+  //   [new Ingredient('Strawberry',10,'Strawberry description',1),new Ingredient('Cheese',50,'Cheese description',2),
+  //   new Ingredient('Wheat bread crust',1,'Wheat bread crust description',1)]),
+  //   new Recipe('Martini','A cocktail made with gin and vermouth, and garnished with an olive or a lemon twist. Over the years, the martini has become one of the best-known mixed alcoholic beverages.',
+  //   'https://source.unsplash.com/1000x200/?Martini',
+  //   [new Ingredient('Gin',30,'Gin description',3),new Ingredient('Vermouth',50,'Vermouth description',3),
+  //   new Ingredient('Olive',1,'Olive description',1)]
+  //   )
+  // ];
 
     RecipeCount()
     {
@@ -57,6 +61,25 @@ export class RecipeService
     {
       this.recepies.splice(index,1);
       this.recipeAltered.next({edit:false,recipe:null,ind:-1});
+    }
+    
+    SaveData()
+    {
+      this.http.delete('https://nghttp-db.firebaseio.com/Recipes.json').subscribe(()=>
+      {
+        this.http.post('https://nghttp-db.firebaseio.com/Recipes.json',this.recepies).subscribe();
+      });
+    }
+
+    FetchData()
+    {
+      this.http.get('https://nghttp-db.firebaseio.com/Recipes.json')
+      .subscribe(data => 
+        {
+
+          this.recepies = data;
+          this.recipeAltered.next({edit:false,recipe:null,ind:-1});
+      });
     }
 
 }

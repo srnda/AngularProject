@@ -1,3 +1,10 @@
+<div *ngIf="recepies.length < 1">
+  <h4>No recipes...</h4>
+</div>
+
+
+<div *ngIf="recepies.length > 0">
+
 <!-- <a routerLink="{{i}}"> -->
 
   <a routerLink="{{i}}" routerLinkActive="border-info"
@@ -15,3 +22,4 @@
 </a>
 
 <!-- </a> -->
+</div>

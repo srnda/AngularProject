@@ -16,7 +16,7 @@
 
                
             <form class="form-inline ml-auto">
-                <span class="dropdown">
+                <span class="dropdown" style="cursor: pointer;">
                         <a style="cursor: pointer;" class="nav-link dropdown-toggle"  data-toggle="dropdown"
                             style="color:black;" >
                             <!-- appHoverDropdown -->
@@ -24,8 +24,10 @@
                         </a>
                         <div class="dropdown-menu defaultFont" >
                                 <!-- appMouseleaveDropdown -->
-                                <a style="cursor: pointer;" class="dropdown-item">Save</a>
-                                <a style="cursor: pointer;" class="dropdown-item">Fetch</a>
+                                <a style="cursor: pointer;" class="dropdown-item"
+                                 (click)="recipeService.SaveData();">Save</a>
+                                <a style="cursor: pointer;" class="dropdown-item"
+                                (click)="recipeService.FetchData();">Fetch</a>
                         </div>
                 </span>
 
