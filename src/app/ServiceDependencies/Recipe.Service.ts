@@ -77,6 +77,7 @@ export class RecipeService
 
     FetchData()
     {
+      this.recepies = [];
       this.recipeLoading.emit(true);
       this.http.get('https://nghttp-db.firebaseio.com/Recipes.json').subscribe(data=>
         {
@@ -91,8 +92,8 @@ export class RecipeService
             }
             var recSer = new Recipe( recObj['name'], recObj['description'], recObj['imagePath'], ingrForRec)
             this.recepies.push( recSer );
-            this.recipeAltered.next({edit:false,recipe:recSer,ind:-1});
           }
+          this.recipeAltered.next({edit:false,recipe:null,ind:-1});
           this.recipeLoading.emit(false);
         });
     }
