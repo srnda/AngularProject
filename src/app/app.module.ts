@@ -19,8 +19,9 @@ import { RecipeEditComponent } from './Components/recipes/recipe-edit/recipe-edi
 import { ShoppingListService } from './ServiceDependencies/ShoppingList.Service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthenticationComponent } from './Components/authentication/authentication.component';
 
-const routes:Routes = 
+const routes:Routes =
 [
   {path:'',redirectTo:'Recipes',pathMatch:'full'},
   {path:'Recipes',component:RecipesComponent, children:
@@ -32,6 +33,11 @@ const routes:Routes =
     ]
   },
   {path:'ShoppingList',component:ShoppingListComponent},
+  {path:'Auth', children:
+    [
+      {path:':mode',component:AuthenticationComponent},
+    ]
+  }
 ]
 @NgModule({
   declarations: [
@@ -46,7 +52,8 @@ const routes:Routes =
     MouseEnterShowDropdownDirective,
     MouseleaveDropdownDirective,
     RecipeStartComponent,
-    RecipeEditComponent
+    RecipeEditComponent,
+    AuthenticationComponent
   ],
   imports: [
     ReactiveFormsModule,

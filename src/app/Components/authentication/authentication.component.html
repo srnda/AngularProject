@@ -1,0 +1,32 @@
+<div class="h-100">
+  <form [formGroup]="authForm">
+    <div class="container ml-auto mr-auto mt-5 mb-auto">
+        <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 mb-2 ml-auto mr-auto">
+          <input type="email" placeholder="Email" class="form-control form-control-lg" formControlName="email">
+        </div>
+
+        <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 mb-2 ml-auto mr-auto">
+          <input type="password" class="form-control form-control-lg" placeholder="Password" formControlName="password">
+        </div>
+
+        <div [formArrayName]="'cnfPwdArray'" *ngIf="mode == 'SignUp'">
+          <div *ngFor="let frmCtrl of cnfPwdArr; let inn = index;" class="col-xs-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 mb-2 ml-auto mr-auto">
+            <input type="password" class="form-control form-control-lg" placeholder="Confirm Password" [formControlName]="inn" >
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 mb-2 ml-auto mr-auto">
+          <button class="btn btn-info btn-lg" *ngIf="mode == 'Login'" (click)="SubmitForm();" [disabled]="authForm.invalid">
+            Login
+          </button>
+
+          <button class="btn btn-info btn-lg" *ngIf="mode == 'SignUp'" (click)="SubmitForm();" [disabled]="authForm.invalid">
+            Sign up
+          </button>
+
+          <a *ngIf="mode == 'Login'" class="ml-4" routerLink="../SignUp">Register</a>
+          <a *ngIf="mode == 'SignUp'" class="ml-4" routerLink="../Login">Login</a>
+        </div>
+    </div>
+</form>
+</div>

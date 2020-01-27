@@ -12,13 +12,28 @@
                 <li class="nav-item">
                     <a class="nav-link" routerLink="ShoppingList" id="nav_ShoppingList" routerLinkActive="active">Shopping List</a>
                 </li>
+
+
             </ul>
 
-               
+
             <form class="form-inline ml-auto">
                 <span class="dropdown" style="cursor: pointer;">
                         <a style="cursor: pointer;" class="nav-link dropdown-toggle"  data-toggle="dropdown"
-                            style="color:black;" >
+                        style="color:grey" >
+                            Accounts
+                        </a>
+                    <div class="dropdown-menu defaultFont" >
+                            <a style="cursor: pointer;" class="dropdown-item"  routerLink="Auth/Login">Login</a>
+                            <a style="cursor: pointer;" class="dropdown-item" routerLink="Auth/SignUp">Sign Up</a>
+                    </div>
+                </span>
+
+                    <!-- </li> -->
+                <!-- </ul> -->
+                <span class="dropdown" style="cursor: pointer;">
+                        <a style="cursor: pointer;" class="nav-link dropdown-toggle"  data-toggle="dropdown"
+                            style="color:grey" >
                             <!-- appHoverDropdown -->
                                 Manage&trade;
                         </a>
@@ -34,6 +49,7 @@
                 <!-- <input type="text" class="form-control mr-2 ml-2" placeholder="Search">
                 <button type="button" class="btn btn-outline-dark">Search</button> -->
             </form>
+
             <a routerLink="../Recipes/New">
             <button class="btn btn-outline-success ml-2">
                     New Recipe
