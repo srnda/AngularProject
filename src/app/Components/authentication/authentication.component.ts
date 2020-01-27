@@ -46,7 +46,7 @@ export class AuthenticationComponent implements OnInit {
     console.log(this.authForm);
   }
 
- {
+  Validator_ConfirmPassword(control:FormControl){
     var pwd = (<FormControl>this.authForm.get('password')).value;
     if ( pwd == null || pwd == '')
     {
