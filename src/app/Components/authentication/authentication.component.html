@@ -3,15 +3,21 @@
     <div class="container ml-auto mr-auto mt-5 mb-auto">
         <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 mb-2 ml-auto mr-auto">
           <input type="email" placeholder="Email" class="form-control form-control-lg" formControlName="email">
+          <div class="small text-danger" *ngIf="authForm.get('email').errors != null && authForm.get('email').errors['required'] && authForm.get('email').touched">Enter email.</div>
+          <div class="small text-danger" *ngIf="authForm.get('email').errors != null && authForm.get('email').errors['email'] && authForm.get('email').touched">Entered email is invalid.</div>
         </div>
 
         <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 mb-2 ml-auto mr-auto">
           <input type="password" class="form-control form-control-lg" placeholder="Password" formControlName="password">
+          <div class="small text-danger" *ngIf="authForm.get('password').errors != null && authForm.get('password').errors['required'] && authForm.get('password').touched">Enter password.</div>
+          <div class="small text-danger" *ngIf="authForm.get('password').errors != null && authForm.get('password').errors['minlength'] && authForm.get('password').touched">Password should have atleast six characters.</div>
         </div>
 
         <div [formArrayName]="'cnfPwdArray'" *ngIf="mode == 'SignUp'">
           <div *ngFor="let frmCtrl of cnfPwdArr; let inn = index;" class="col-xs-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 mb-2 ml-auto mr-auto">
             <input type="password" class="form-control form-control-lg" placeholder="Confirm Password" [formControlName]="inn" >
+            <div class="small text-danger" *ngIf="authForm.get('cnfPwdArray.0').errors != null && authForm.get('cnfPwdArray.0').errors['required'] && authForm.get('cnfPwdArray.0').touched && authForm.get('password').valid">Reenter password.</div>
+            <div class="small text-danger" *ngIf="authForm.get('cnfPwdArray.0').errors != null && authForm.get('cnfPwdArray.0').errors['notMatching'] && authForm.get('cnfPwdArray.0').touched && authForm.get('password').valid">Passwords are not matching.</div>
           </div>
         </div>
 

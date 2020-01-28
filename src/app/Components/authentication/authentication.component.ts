@@ -14,9 +14,6 @@ export class AuthenticationComponent implements OnInit {
   private cnfPwdArr;
   constructor(private activeRoute:ActivatedRoute, private router:Router)
   {
-    if(this.activeRoute.snapshot.params['mode'] == 'Login'){this.mode = 'Login'}
-    else{this.mode = 'SignUp';}
-
     this.authForm = new FormGroup(
       {
         'email':new FormControl(null, [Validators.required, Validators.email]),
@@ -24,20 +21,20 @@ export class AuthenticationComponent implements OnInit {
         'cnfPwdArray':new FormArray([])
       });
 
-    if(this.mode == 'SignUp')
-    {
-      const cnfrmPassword = new FormControl(null,[Validators.required,this.Validator_ConfirmPassword.bind(this)]);
-      this.authForm.get('cnfPwdArray').push(cnfrmPassword);
-      this.cnfPwdArr = (<FormArray>this.authForm.get('cnfPwdArray')).controls;
-    }
-  }
-
-  ngOnInit() {
     this.activeRoute.params.subscribe(
       params =>
       {
-        this.mode =  params['mode'];
+      this.mode =  params['mode'];
+      if(this.mode == 'SignUp' && (<FormArray>this.authForm.get('cnfPwdArray')).controls.length < 1 )
+      {
+        const cnfrmPassword = new FormControl(null,[Validators.required,this.Validator_ConfirmPassword.bind(this)]);
+        this.authForm.get('cnfPwdArray').push(cnfrmPassword);
+        this.cnfPwdArr = (<FormArray>this.authForm.get('cnfPwdArray')).controls;
+      }
       });
+  }
+
+  ngOnInit() {
 
   }
 
@@ -54,7 +51,7 @@ export class AuthenticationComponent implements OnInit {
     }
     if(control.value != (<FormControl>this.authForm.get('password')).value)
     {
-      return {invalid:true}
+      return {notMatching:true}
     }
     return null;
   }
