@@ -1,8 +1,8 @@
 ## General Info
 
-Master has all the changes till observalbles. 
-
-Custom directives, services and dependency injection, routing(Services implementation is replaced with routing) and forms are completed.
+Master has changes till http. 
+Authentication has all changes(including that of master's).
+Custom directives, services and dependency injection, routing(Services implementation is replaced with routing), forms, http and authentication are completed.
 
 # RecipeBookProject
 
