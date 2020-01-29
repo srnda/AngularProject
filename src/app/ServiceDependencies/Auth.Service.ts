@@ -16,23 +16,23 @@ export class Auth
             {email:email,password:password,returnSecureToken:true})
             .pipe(catchError(errorResponse =>
                 {
-                    let errorTitle = 'Unknown error.'
-                    let errorMessage = 'An unexpected error occurred.'
+                    let errorTitle = 'Unknown error.';
+                    let errorMessage = 'An unexpected error occurred.';
 
-                    if(!(errorResponse.error && errorResponse.error.error)){return throwError([errorTitle,errorMessage])}
+                    if(!(errorResponse.error && errorResponse.error.error)){return throwError([errorTitle,errorMessage]);}
 
                     if(errorResponse.error.error.message == 'EMAIL_EXISTS')
                     {
-                        errorTitle = 'Duplicate email'
-                        errorMessage = 'The entered email id is already registered.'
+                        errorTitle = 'Duplicate email';
+                        errorMessage = 'The entered email id is already registered.';
                     }
 
                     else if(errorResponse.error.error.message == 'INVALID_EMAIL')
                     {
-                        errorTitle = 'Invalid email'
-                        errorMessage = 'The entered email id is invalid.'
+                        errorTitle = 'Invalid email';
+                        errorMessage = 'The entered email id is invalid.';
                     }
-                    return throwError([errorTitle,errorMessage])
+                    return throwError([errorTitle,errorMessage]);
                 }));
     }
 
@@ -43,22 +43,22 @@ export class Auth
             {email:email,password:password,returnSecureToken:true})
             .pipe(catchError(errorResponse =>
                 {
-                    let errorTitle = 'Unknown error.'
-                    let errorMessage = 'An unexpected error occurred.'
+                    let errorTitle = 'Unknown error.';
+                    let errorMessage = 'An unexpected error occurred.';
 
                     if(!(errorResponse.error && errorResponse.error.error)){return throwError([errorTitle,errorMessage])}
 
                     if(errorResponse.error.error.message == 'INVALID_PASSWORD')
                     {
-                        errorTitle = 'Wrong password'
-                        errorMessage = 'The password entered is incorrect.'
+                        errorTitle = 'Wrong password';
+                        errorMessage = 'The password entered is incorrect.';
                     }
                     else if(errorResponse.error.error.message == 'EMAIL_NOT_FOUND')
                     {
-                        errorTitle = 'Invalid email'
-                        errorMessage = 'The email entered is invalid or incorrect.'
+                        errorTitle = 'Invalid email';
+                        errorMessage = 'The email entered is invalid or incorrect.';
                     }
-                    return throwError([errorTitle,errorMessage])
+                    return throwError([errorTitle,errorMessage]);
                 }));
     }
 }

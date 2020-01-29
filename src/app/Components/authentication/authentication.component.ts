@@ -33,7 +33,7 @@ export class AuthenticationComponent implements OnInit {
         this.mode =  params['mode'];
         if(this.mode == 'SignUp' && (<FormArray>this.authForm.get('cnfPwdArray')).controls.length < 1 )
         {
-          const cnfrmPassword = new FormControl(null,[Validators.required,this.Validator_ConfirmPassword.bind(this)]);
+          const cnfrmPassword = new FormControl(null,[Validators.required,Validators.minLength(6),this.Validator_ConfirmPassword.bind(this)]);
           this.authForm.get('cnfPwdArray').push(cnfrmPassword);
           this.cnfPwdArr = (<FormArray>this.authForm.get('cnfPwdArray')).controls;
         }
@@ -59,7 +59,7 @@ export class AuthenticationComponent implements OnInit {
   {
     if(this.authForm.valid)
     {
-      var authSubs = null;
+      let authSubs = null;
       if(this.mode == 'SignUp')
       {
         authSubs = this.authService.SignUp(this.authForm.get('email').value,this.authForm.get('password').value);
@@ -86,7 +86,7 @@ export class AuthenticationComponent implements OnInit {
   }
 
   Validator_ConfirmPassword(control:FormControl){
-    var pwd = (<FormControl>this.authForm.get('password')).value;
+    const pwd = (<FormControl>this.authForm.get('password')).value;
     if ( pwd == null || pwd == '')
     {
       return null;
