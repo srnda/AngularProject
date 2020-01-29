@@ -20,6 +20,7 @@ import { ShoppingListService } from './ServiceDependencies/ShoppingList.Service'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthenticationComponent } from './Components/authentication/authentication.component';
+import { Auth } from './ServiceDependencies/Auth.Service';
 
 const routes:Routes =
 [
@@ -63,7 +64,7 @@ const routes:Routes =
     FormsModule,
     HttpClientModule
   ],
-  providers:[ShoppingListService,RecipeService],
+  providers:[ShoppingListService,RecipeService,Auth],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

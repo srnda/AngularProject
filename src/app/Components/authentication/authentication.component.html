@@ -1,6 +1,10 @@
 <div class="h-100">
-  <form [formGroup]="authForm">
+  <div class="container ml-auto mr-auto mt-5 mb-auto" *ngIf="disableForm">
+    <h4>Signing you up...</h4>
+  </div>
+  <form [formGroup]="authForm" [hidden]="disableForm">
     <div class="container ml-auto mr-auto mt-5 mb-auto">
+
         <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 mb-2 ml-auto mr-auto">
           <input type="email" placeholder="Email" class="form-control form-control-lg" formControlName="email">
           <div class="small text-danger" *ngIf="authForm.get('email').errors != null && authForm.get('email').errors['required'] && authForm.get('email').touched">Enter email.</div>
@@ -22,7 +26,7 @@
         </div>
 
         <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 mb-2 ml-auto mr-auto">
-          <button class="btn btn-info btn-lg" *ngIf="mode == 'Login'" (click)="SubmitForm();" [disabled]="! (authForm.get('password').valid && authForm.get('email').valid)">
+          <button class="btn btn-info btn-lg" *ngIf="mode == 'Login'" (click)="SubmitForm();" [disabled]="(! (authForm.get('password').valid && authForm.get('email').valid)) ">
             Login
           </button>
 
@@ -36,3 +40,12 @@
     </div>
 </form>
 </div>
+<div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 mb-2 ml-auto mr-auto alert alert-danger alert-dismissible" *ngIf="error">
+  <button class="close" type="button" data-dismiss="alert">
+    <span>&times;</span>
+</button>
+  <strong>{{errorTitle}}</strong>
+{{errorMessage}}
+</div>
+
+

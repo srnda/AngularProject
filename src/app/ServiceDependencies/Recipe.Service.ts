@@ -55,7 +55,7 @@ export class RecipeService
     EditedRecipe(recipeAlt:Recipe,id:number):boolean
     {
       this.recepies[id] = recipeAlt
-      this.recipeAltered.next({edit:true,recipe:recipeAlt,ind:id}) 
+      this.recipeAltered.next({edit:true,recipe:recipeAlt,ind:id})
       return true;
     }
     DeleteRecipe(index:number)
@@ -63,7 +63,7 @@ export class RecipeService
       this.recepies.splice(index,1);
       this.recipeAltered.next({edit:false,recipe:null,ind:-1});
     }
-    
+
     SaveData()
     {
       this.http.delete('https://nghttp-db.firebaseio.com/Recipes.json').subscribe(()=>
@@ -95,6 +95,14 @@ export class RecipeService
           }
           this.recipeAltered.next({edit:false,recipe:null,ind:-1});
           this.recipeLoading.emit(false);
+        },
+        error =>
+        {
+          if (error.status == 401)
+          {
+            this.recipeAltered.error(401);
+          }
+
         });
     }
 

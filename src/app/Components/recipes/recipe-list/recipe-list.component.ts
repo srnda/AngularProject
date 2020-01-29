@@ -12,13 +12,14 @@ export class RecipeListComponent implements OnInit {
 
   private recepies:Recipe[];
   private loadingData = false;
+  private loadingText = 'Fetching recipes... Hang on.';
 
   constructor(private recipeService:RecipeService) {}
 
   ngOnInit() {
     this.recipeService.recipeLoading.subscribe(status => {this.loadingData = status;});
     this.recepies =  this.recipeService.GetRecepies();
-    this.recipeService.recipeAltered.subscribe( data=> 
+    this.recipeService.recipeAltered.subscribe( data=>
       {//1* - a recipe
         if(data.edit == false) //added or deleted 1*
         {
@@ -29,7 +30,8 @@ export class RecipeListComponent implements OnInit {
          }
         else //edited 1*
         {this.recepies[data.ind] = data.recipe;}
-      });
+      },
+            error=>{if(error == 401){this.loadingText = "Login to see the recipes."}});
     this.recipeService.FetchData();
 
   }
@@ -43,7 +45,7 @@ export class RecipeListComponent implements OnInit {
   {
     document.getElementById('img'+index).classList.remove('hoverCard') ;
   }
-  
+
   // RecipeClicked(clickIndex:number)
   // {
   //   this.recipeService.recipeSelected.emit(this.recepies[clickIndex]);
