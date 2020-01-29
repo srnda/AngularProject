@@ -55,17 +55,19 @@ export class AuthenticationComponent implements OnInit {
     }, 2000);
   }
 
-  SubmitForm()
+   SubmitForm()
   {
-    if(this.authForm.valid)
-    {
+    // if(this.authForm.valid)
+    // {
       let authSubs = null;
       if(this.mode == 'SignUp')
       {
+        if(!this.authForm.valid){return;}
         authSubs = this.authService.SignUp(this.authForm.get('email').value,this.authForm.get('password').value);
       }
       else
       {
+        if(!(this.authForm.get('email').valid && this.authForm.get('password')).valid ){return;}
         authSubs = this.authService.LogIn(this.authForm.get('email').value,this.authForm.get('password').value);
       }
       this.disableForm = true;
@@ -75,6 +77,9 @@ export class AuthenticationComponent implements OnInit {
           {
             this.authForm.reset();
             this.disableForm = false;
+
+            const user = new User(response.localId,response.email,response.idToken, new Date(new Date().getTime() + (+response.expiresIn * 1000)));
+            console.log(user);
           },
           errorDetails =>
           {
@@ -82,7 +87,7 @@ export class AuthenticationComponent implements OnInit {
             this.ShowError(errorDetails[0],errorDetails[1]);
           }
         );
-    }
+    // }
   }
 
   Validator_ConfirmPassword(control:FormControl){
