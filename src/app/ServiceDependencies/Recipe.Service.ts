@@ -3,11 +3,12 @@ import { Ingredient } from '../Models/Ingredient.model';
 import { Subject } from 'rxjs';
 import{HttpClient} from '@angular/common/http'
 import { Injectable, EventEmitter } from '@angular/core';
+import { Auth } from './Auth.Service';
 
 @Injectable()
 export class RecipeService
 {
-  constructor(private http:HttpClient){}
+  constructor(private http:HttpClient, private authService:Auth){}
     // public recipeSelected = new EventEmitter<Recipe>();
     public recipeSelected = new Subject<Recipe>();
     public recipeAltered = new Subject<{edit:boolean, recipe:Recipe,ind:number}>();
@@ -54,7 +55,7 @@ export class RecipeService
     }
     EditedRecipe(recipeAlt:Recipe,id:number):boolean
     {
-      this.recepies[id] = recipeAlt
+      this.recepies[id] = recipeAlt;
       this.recipeAltered.next({edit:true,recipe:recipeAlt,ind:id})
       return true;
     }
@@ -68,7 +69,7 @@ export class RecipeService
     {
       this.http.delete('https://nghttp-db.firebaseio.com/Recipes.json').subscribe(()=>
       {
-        for (var rec of this.recepies)
+        for (const rec of this.recepies)
         {
           this.http.post('https://nghttp-db.firebaseio.com/Recipes.json',rec).subscribe();
         }
@@ -81,7 +82,7 @@ export class RecipeService
       this.recipeLoading.emit(true);
       this.http.get('https://nghttp-db.firebaseio.com/Recipes.json').subscribe(data=>
         {
-          for (var key in data)
+          for (const key in data)
           {
             var recObj = data[key];
             var ingrForRec = []

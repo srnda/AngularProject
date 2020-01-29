@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Auth } from 'src/app/ServiceDependencies/Auth.Service';
+import { Subject } from 'rxjs';
+import { User } from 'src/app/Models/User.model';
 
 @Component({
   selector: 'app-authentication',
@@ -17,6 +19,9 @@ export class AuthenticationComponent implements OnInit {
   private mode:string;
   private authForm;
   private cnfPwdArr;
+  public LoggedIn = new Subject<User>();
+  private disabledText:string;
+
 
   private disableForm = false;
   constructor(private activeRoute:ActivatedRoute, private router:Router, private authService:Auth)
@@ -41,6 +46,7 @@ export class AuthenticationComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.AutoLogin();
   }
 
   ShowError(errorTitle, errorMessage)
@@ -55,7 +61,7 @@ export class AuthenticationComponent implements OnInit {
     }, 2000);
   }
 
-   SubmitForm()
+  SubmitForm()
   {
     // if(this.authForm.valid)
     // {
@@ -64,11 +70,13 @@ export class AuthenticationComponent implements OnInit {
       {
         if(!this.authForm.valid){return;}
         authSubs = this.authService.SignUp(this.authForm.get('email').value,this.authForm.get('password').value);
+        this.disabledText = 'Signing you up...';
       }
       else
       {
         if(!(this.authForm.get('email').valid && this.authForm.get('password')).valid ){return;}
         authSubs = this.authService.LogIn(this.authForm.get('email').value,this.authForm.get('password').value);
+        this.disabledText = 'Logging you in...';
       }
       this.disableForm = true;
       authSubs.subscribe
@@ -77,9 +85,11 @@ export class AuthenticationComponent implements OnInit {
           {
             this.authForm.reset();
             this.disableForm = false;
-
-            const user = new User(response.localId,response.email,response.idToken, new Date(new Date().getTime() + (+response.expiresIn * 1000)));
-            console.log(user);
+            const user = new User(response.localId,response.email,response.idToken, new Date(new Date().getTime() + (+response.expiresIn * 1000)-60000));
+            this.authService.user = user;
+            localStorage.setItem('loggedInUser',JSON.stringify(user));
+            this.authService.AutoLogout(3600000-60000);
+            this.router.navigate(['Recipes']);
           },
           errorDetails =>
           {

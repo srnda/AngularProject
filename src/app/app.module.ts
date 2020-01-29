@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, forwardRef } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,14 +18,16 @@ import { RecipeService } from './ServiceDependencies/Recipe.Service';
 import { RecipeEditComponent } from './Components/recipes/recipe-edit/recipe-edit.component';
 import { ShoppingListService } from './ServiceDependencies/ShoppingList.Service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticationComponent } from './Components/authentication/authentication.component';
 import { Auth } from './ServiceDependencies/Auth.Service';
+import { AuthInterceptor } from './ServiceDependencies/AuthInterceptor.service';
+import { AuthGuard } from './ServiceDependencies/AuthGuard.Service';
 
 const routes:Routes =
 [
-  {path:'',redirectTo:'Recipes',pathMatch:'full'},
-  {path:'Recipes',component:RecipesComponent, children:
+  {path:'',redirectTo:'Auth/Login',pathMatch:'full'},
+  {path:'Recipes',component:RecipesComponent, canActivate:[AuthGuard] ,children:
     [
       {path:'',component:RecipeStartComponent},
       {path:'New',component:RecipeEditComponent},
@@ -39,7 +41,7 @@ const routes:Routes =
       {path:':mode',component:AuthenticationComponent},
     ]
   }
-]
+];
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,7 +66,7 @@ const routes:Routes =
     FormsModule,
     HttpClientModule
   ],
-  providers:[ShoppingListService,RecipeService,Auth],
+  providers:[ShoppingListService,RecipeService,Auth, {provide:HTTP_INTERCEPTORS ,useClass:AuthInterceptor,multi:true},AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

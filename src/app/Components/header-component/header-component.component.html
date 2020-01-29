@@ -6,7 +6,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item">
+                <li class="nav-item" *ngIf="loggedIn">
                     <a class="nav-link" routerLink="Recipes" routerLinkActive="active">Recepies</a>
                 </li>
                 <li class="nav-item">
@@ -21,17 +21,19 @@
                 <span class="dropdown" style="cursor: pointer;">
                         <a style="cursor: pointer;" class="nav-link dropdown-toggle"  data-toggle="dropdown"
                         style="color:grey" >
-                            Accounts
+                            {{accountName}}
                         </a>
                     <div class="dropdown-menu defaultFont" >
-                            <a style="cursor: pointer;" class="dropdown-item"  routerLink="Auth/Login">Login</a>
-                            <a style="cursor: pointer;" class="dropdown-item" routerLink="Auth/SignUp">Sign Up</a>
+                            <a style="cursor: pointer;" class="dropdown-item"  routerLink="Auth/Login" *ngIf="!loggedIn">Login</a>
+                            <a style="cursor: pointer;" class="dropdown-item" routerLink="Auth/SignUp" *ngIf="!loggedIn">Sign Up</a>
+                            <a style="cursor: pointer;" class="dropdown-item"  *ngIf="loggedIn" (click)="authService.LogOut();">Logout</a>
+                            <!-- routerLink="Auth/Login" -->
                     </div>
                 </span>
 
                     <!-- </li> -->
                 <!-- </ul> -->
-                <span class="dropdown" style="cursor: pointer;">
+                <span class="dropdown" style="cursor: pointer;" *ngIf="loggedIn" >
                         <a style="cursor: pointer;" class="nav-link dropdown-toggle"  data-toggle="dropdown"
                             style="color:grey" >
                             <!-- appHoverDropdown -->
@@ -51,7 +53,7 @@
             </form>
 
             <a routerLink="../Recipes/New">
-            <button class="btn btn-outline-success ml-2">
+            <button class="btn btn-outline-success ml-2" [disabled]="!loggedIn">
                     New Recipe
             </button>
         </a>

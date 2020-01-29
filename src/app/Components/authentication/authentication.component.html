@@ -1,6 +1,6 @@
 <div class="h-100">
   <div class="container ml-auto mr-auto mt-5 mb-auto" *ngIf="disableForm">
-    <h4>Signing you up...</h4>
+    <h4>{{disabledText}}</h4>
   </div>
   <form [formGroup]="authForm" [hidden]="disableForm">
     <div class="container ml-auto mr-auto mt-5 mb-auto">

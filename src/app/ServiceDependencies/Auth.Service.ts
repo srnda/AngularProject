@@ -2,12 +2,37 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthResponse } from '../TypeDefinitions/SignUpResponse.iType';
 import {catchError} from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { throwError, Subject } from 'rxjs';
+import { User } from '../Models/User.model';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class Auth
 {
-    constructor(private http:HttpClient){}
+
+    private _user:User;
+    public LoggedInUser = new Subject<User>();
+    set user(user:User)
+    {
+        this._user = user;
+        this.LoggedInUser.next(this._user);
+    }
+
+    isLoggedIn():boolean
+    {
+      return !!this._user;
+    }
+    constructor(private http:HttpClient, private router:Router){}
+
+    GetUserToken()
+    {
+      if(!this._user)
+      {localStorage.removeItem('loggedInUser');return null;}
+      const token = this._user.token;
+      if (token){return token;}
+      // this.LogOut();
+      return null;
+    }
 
     SignUp(email,password)
     {
@@ -60,5 +85,32 @@ export class Auth
                     }
                     return throwError([errorTitle,errorMessage]);
                 }));
+    }
+
+    LogOut()
+    {
+      localStorage.removeItem('loggedInUser');
+      this.user = null;
+      this.router.navigate(['Auth/Login']);
+    }
+
+    AutoLogin()
+    {
+      const userDetails = localStorage.getItem('loggedInUser');
+      if(!userDetails)
+        {return;}
+      const userRep:{id:string,email:string,_token:string,_expiresBy:string} = JSON.parse(userDetails);
+      this.user = new User(userRep.id,userRep.email,userRep._token,new Date(userRep._expiresBy));
+
+      this.AutoLogout(new Date(userRep._expiresBy).getTime() - new Date().getTime());
+
+      this.router.navigate(['Recipes']);
+    }
+
+    AutoLogout(expMlSec:number)
+    {
+      setTimeout(() => {
+        this.LogOut();
+      }, expMlSec);
     }
 }
