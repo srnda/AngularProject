@@ -3,7 +3,7 @@
 </div>
 
 <div *ngIf="loadingData">
-  <h4>Fetching recipes... Hang on.</h4>
+  <h4>{{loadingText}}</h4>
 </div>
 
 
@@ -12,10 +12,10 @@
 <!-- <a routerLink="{{i}}"> -->
 
   <a routerLink="{{i}}" routerLinkActive="border-info"
-    *ngFor="let rec of recepies; let i = index" 
-    class="card defaultFont mb-1 border" 
-    style="text-decoration:none; cursor: pointer; overflow: hidden;" 
-    (mouseenter)="mouseEnter(i)" 
+    *ngFor="let rec of recepies; let i = index"
+    class="card defaultFont mb-1 border"
+    style="text-decoration:none; cursor: pointer; overflow: hidden;"
+    (mouseenter)="mouseEnter(i)"
     (mouseleave)="mouseLeave(i)"
     >
     <!-- (click)="RecipeClicked(i)" -->
