@@ -35,12 +35,19 @@ export class AuthenticationComponent implements OnInit {
     this.activeRoute.params.subscribe(
       params =>
       {
-        this.mode =  params['mode'];
-        if(this.mode == 'SignUp' && (<FormArray>this.authForm.get('cnfPwdArray')).controls.length < 1 )
+        if(this.mode != params['mode'])
         {
-          const cnfrmPassword = new FormControl(null,[Validators.required,Validators.minLength(6),this.Validator_ConfirmPassword.bind(this)]);
-          this.authForm.get('cnfPwdArray').push(cnfrmPassword);
-          this.cnfPwdArr = (<FormArray>this.authForm.get('cnfPwdArray')).controls;
+          const email = this.authForm.get('email').value;
+          const password = this.authForm.get('password').value;
+          this.authForm.reset();
+          this.authForm.patchValue({'email':email,'password':password});
+          this.mode =  params['mode'];
+          if(this.mode == 'SignUp' && (<FormArray>this.authForm.get('cnfPwdArray')).controls.length < 1 )
+          {
+            const cnfrmPassword = new FormControl(null,[Validators.required,Validators.minLength(6),this.Validator_ConfirmPassword.bind(this)]);
+            this.authForm.get('cnfPwdArray').push(cnfrmPassword);
+            this.cnfPwdArr = (<FormArray>this.authForm.get('cnfPwdArray')).controls;
+          }
         }
       });
   }
