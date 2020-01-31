@@ -99,8 +99,8 @@ export class Auth
       const userDetails = localStorage.getItem('loggedInUser');
       if(!userDetails)
         {return;}
-      const userRep:{id:string,email:string,_token:string,_expiresBy:string} = JSON.parse(userDetails);
-      this.user = new User(userRep.id,userRep.email,userRep._token,new Date(userRep._expiresBy));
+      const userRep:{id:string,email:string,_token:string,_expiresBy:string,_refreshToken:string} = JSON.parse(userDetails);
+      this.user = new User(userRep.id,userRep.email,userRep._token,new Date(userRep._expiresBy),userRep._refreshToken);
 
       this.AutoLogout(new Date(userRep._expiresBy).getTime() - new Date().getTime());
 

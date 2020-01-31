@@ -85,7 +85,7 @@ export class AuthenticationComponent implements OnInit {
           {
             this.authForm.reset();
             this.disableForm = false;
-            const user = new User(response.localId,response.email,response.idToken, new Date(new Date().getTime() + (+response.expiresIn * 1000)-60000));
+            const user = new User(response.localId,response.email,response.idToken, new Date(new Date().getTime() + (+response.expiresIn * 1000)-60000),response.refreshToken);
             this.authService.user = user;
             localStorage.setItem('loggedInUser',JSON.stringify(user));
             this.authService.AutoLogout(3600000-60000);
