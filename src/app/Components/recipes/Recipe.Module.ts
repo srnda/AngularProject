@@ -8,6 +8,7 @@ import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthGuard } from 'src/app/ServiceDependencies/AuthGuard.Service';
 
 
 @NgModule(
@@ -23,17 +24,22 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         ],
         imports:
         [ 
-            RouterModule,
+            RouterModule.forChild(
+                [
+                    {path:'Recipes',component:RecipesComponent, canActivate:[AuthGuard],
+                    children:
+                    [
+                        {path:'',component:RecipeStartComponent},
+                        {path:'New',component:RecipeEditComponent},
+                        {path:':index/Edit',component:RecipeEditComponent},
+                        {path:':index',component:RecipeDetailComponent}
+                    ]},
+                ]),
             CommonModule,
             FormsModule,
             ReactiveFormsModule
         ],
-        exports:[RecipesComponent,
-            RecipeListComponent,
-            RecipeDetailComponent,
-            RecipeItemComponent,
-            RecipeStartComponent,
-            RecipeEditComponent,]
+       
     })
 export class RecipeModule
 {
