@@ -16,8 +16,7 @@ import { FormsModule } from '@angular/forms';
         imports:
         [
             CommonModule,
-            BrowserModule,
-            RouterModule.forChild([{path:'ShoppingList',component:ShoppingListComponent}]),
+            RouterModule.forChild([{path:'',component:ShoppingListComponent}]),
             FormsModule
         ]
     })

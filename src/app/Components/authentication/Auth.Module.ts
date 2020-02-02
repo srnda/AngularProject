@@ -11,7 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
         [
             CommonModule,
             ReactiveFormsModule,
-            RouterModule.forChild([{path:'Auth', children:[{path:':mode',component:AuthenticationComponent},]}]),
+            RouterModule.forChild([{path:'', children:[{path:':mode',component:AuthenticationComponent},]}]),
         ]
     })
 

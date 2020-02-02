@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, forwardRef } from '@angular/core';
-
+import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponentComponent } from './Components/header-component/header-component.component';
@@ -11,13 +10,13 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Auth } from './ServiceDependencies/Auth.Service';
 import { AuthInterceptor } from './ServiceDependencies/AuthInterceptor.service';
 import { AuthGuard } from './ServiceDependencies/AuthGuard.Service';
-import { RecipeModule } from './Components/recipes/Recipe.Module';
-import { ShoppingListModule } from './Components/shopping-list/ShoppingList.Module';
-import { AuthModule } from './Components/authentication/Auth.Module';
 
 const routes:Routes =
 [
-  {path:'',redirectTo:'Auth/Login',pathMatch:'full'}  
+  {path:'',redirectTo:'Auth/Login',pathMatch:'full'},
+  {path:'Auth', loadChildren: () => import('./Components/authentication/Auth.Module').then(m => m.AuthModule)},
+  {path:'Recipes',loadChildren: () => import('./Components/recipes/Recipe.Module').then(m => m.RecipeModule)},
+  {path:'ShoppingList',loadChildren: () => import('./Components/shopping-list/ShoppingList.Module').then(m => m.ShoppingListModule)}  
 ];
 @NgModule({
   declarations: [
@@ -28,10 +27,7 @@ const routes:Routes =
     BrowserModule,
     AppRoutingModule,
     RouterModule.forRoot(routes),
-    HttpClientModule,
-    RecipeModule,
-    ShoppingListModule,
-    AuthModule
+    HttpClientModule
   ],
   providers:[ShoppingListService,RecipeService,Auth, {provide:HTTP_INTERCEPTORS ,useClass:AuthInterceptor,multi:true},AuthGuard],
   bootstrap: [AppComponent]

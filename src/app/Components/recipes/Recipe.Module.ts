@@ -26,7 +26,7 @@ import { AuthGuard } from 'src/app/ServiceDependencies/AuthGuard.Service';
         [ 
             RouterModule.forChild(
                 [
-                    {path:'Recipes',component:RecipesComponent, canActivate:[AuthGuard],
+                    {path:'',component:RecipesComponent, canActivate:[AuthGuard],
                     children:
                     [
                         {path:'',component:RecipeStartComponent},
