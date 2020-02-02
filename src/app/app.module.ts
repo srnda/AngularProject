@@ -23,6 +23,7 @@ import { AuthenticationComponent } from './Components/authentication/authenticat
 import { Auth } from './ServiceDependencies/Auth.Service';
 import { AuthInterceptor } from './ServiceDependencies/AuthInterceptor.service';
 import { AuthGuard } from './ServiceDependencies/AuthGuard.Service';
+import { RecipeModule } from './Components/recipes/Recipe.Module';
 
 const routes:Routes =
 [
@@ -46,16 +47,10 @@ const routes:Routes =
   declarations: [
     AppComponent,
     HeaderComponentComponent,
-    RecipesComponent,
-    RecipeListComponent,
-    RecipeDetailComponent,
-    RecipeItemComponent,
     ShoppingListComponent,
     ShoppingListEditComponent,
     MouseEnterShowDropdownDirective,
     MouseleaveDropdownDirective,
-    RecipeStartComponent,
-    RecipeEditComponent,
     AuthenticationComponent
   ],
   imports: [
@@ -64,7 +59,8 @@ const routes:Routes =
     AppRoutingModule,
     RouterModule.forRoot(routes),
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RecipeModule
   ],
   providers:[ShoppingListService,RecipeService,Auth, {provide:HTTP_INTERCEPTORS ,useClass:AuthInterceptor,multi:true},AuthGuard],
   bootstrap: [AppComponent]
