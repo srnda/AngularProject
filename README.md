@@ -1,4 +1,4 @@
-## General Info
+## General Info - Added bu SRNDA
 
 Master has changes till http. 
 Authentication has all changes(including that of master's).
